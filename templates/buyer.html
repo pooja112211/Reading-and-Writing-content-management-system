@@ -10,32 +10,6 @@
    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <script>
-{% comment %} $(document).ready(function () {
-    var $type = $('#typee');
-    var $item = $('#item');
-    var $options = $item.find('option');
-
-    // Hide all items at start (except placeholder)
-    $options.not(':first').hide();
-
-    $type.on('change', function () {
-        var typeId = this.value;
-
-        // Reset item dropdown
-        $item.val('');
-
-        // Hide all items
-        $options.not(':first').hide();
-
-        // Show only matching items
-        if (typeId) {
-            $options.filter(function () {
-                return $(this).data('type') == typeId;
-            }).show();
-        }
-    });
-}); {% endcomment %}
-
 $(document).ready(function () {
 
     var $type = $('#typee');
@@ -89,28 +63,6 @@ $(document).ready(function () {
 
 </script>
 
-
-
-    <script>
-        {% comment %} $(document).ready(function(){ 
-            var $type=$('#typee'),
-                $item=$('#item'),
-                $options=$item.find('option');
-                $type.on('change',function(){
-                    $item.html($options.filter('[value="'+this.value+'"]'));
-                }).trigger('change');
-
-        }); {% endcomment %}
-        {% comment %} $(document).ready(function(){ 
-            var $type=$('#type'),
-                $category=$('#category'),
-                $options=$category.find('option');
-                $type.on('change',function(){
-                    $category.html($options.filter('[value="'+this.value+'"]'));
-                }).trigger('change');
-
-        }); {% endcomment %}
-    </script>
 </head>
 <body>
     <form action="" method="POST">
@@ -152,12 +104,6 @@ $(document).ready(function () {
                         </select>
                     </td>
                     <td>
-                        {% comment %} <select name="item" id="item">
-                            <option value="">--Select Item--</option>
-                            {% for itm in item %}
-                                <option value="{{itm.id}}">{{itm.name}}</option>
-                            {% endfor %}
-                        </select> {% endcomment %}
                         <select name="item" id="item">
     <option value="">--Select Item--</option>
     {% for itm in item %}

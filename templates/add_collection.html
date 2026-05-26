@@ -287,7 +287,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
     
     <script>
-        // Image preview functionality
+        
         document.getElementById('img').addEventListener('change', function(e) {
             const file = e.target.files[0];
             const preview = document.getElementById('image-preview');
@@ -310,7 +310,7 @@
         });
         
         
-        // Form validation and feedback
+        // Form validation 
         const form = document.querySelector('form');
         form.addEventListener('submit', function(e) {
             const name = document.getElementById('name').value;
@@ -321,7 +321,7 @@
             }
         });
         
-        // Add ripple effect to buttons
+        // Added ripple effect to buttons
         document.querySelectorAll('.btn-primary, .btn-upload').forEach(button => {
             button.addEventListener('click', function(e) {
                 const ripple = document.createElement('span');
@@ -351,7 +351,7 @@
             });
         });
         
-        // Add CSS for ripple animation
+        // Added CSS for ripple animation
         const style = document.createElement('style');
         style.textContent = `
             @keyframes ripple-animation {

@@ -379,13 +379,10 @@
                     if (/[0-9]/.test(password)) strength += 20;
                     if (/[^A-Za-z0-9]/.test(password)) strength += 20;
                     
-                    // Cap at 100
                     strength = Math.min(strength, 100);
                     
-                    // Update meter
                     meter.style.width = strength + '%';
                     
-                    // Update color and text
                     let strengthText = '';
                     if (strength < 30) {
                         meter.style.background = '#ff6b6b';
