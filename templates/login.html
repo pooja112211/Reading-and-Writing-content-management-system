@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign In | Category Collection</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            min-height: 100vh;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .signin-container {
+            background: rgba(255, 255, 255, 0.98);
+            border-radius: 25px;
+            width: 100%;
+            max-width: 500px;
+            padding: 50px;
+            box-shadow: 0 25px 70px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+        }
+        
+        .signin-header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-bottom: 25px;
+            border-bottom: 3px solid #667eea;
+        }
+        
+        .signin-title {
+            font-weight: 800;
+            font-size: 2.8rem;
+            margin-bottom: 10px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: 1px;
+        }
+        
+        .signin-subtitle {
+            color: #666;
+            font-size: 1.1rem;
+            font-weight: 400;
+        }
+        
+        .form-group {
+            margin-bottom: 25px;
+        }
+        
+        .form-label {
+            font-weight: 600;
+            color: #2c3e50;
+            font-size: 1.05rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 8px;
+        }
+        
+        .form-control {
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            padding: 14px 50px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.9);
+            width: 100%;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        .form-control:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 0.25rem rgba(102, 126, 234, 0.25);
+            transform: translateY(-2px);
+            outline: none;
+        }
+        
+        .input-with-icon {
+            position: relative;
+            width: 100%;
+        }
+        
+        .input-icon {
+            position: absolute;
+            left: 18px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #667eea;
+            font-size: 1.2rem;
+            z-index: 2;
+        }
+        
+        .error-message {
+            color: #ff6b6b;
+            font-size: 0.9rem;
+            margin-top: 6px;
+            font-weight: 500;
+            background: rgba(255, 107, 107, 0.1);
+            padding: 8px 12px;
+            border-radius: 8px;
+            border-left: 3px solid #ff6b6b;
+            text-align: center;
+        }
+        
+        .global-error {
+            background: linear-gradient(90deg, rgba(255, 107, 107, 0.1), rgba(255, 142, 142, 0.05));
+            color: #ff4757;
+            padding: 15px 20px;
+            border-radius: 12px;
+            border-left: 4px solid #ff6b6b;
+            font-weight: 600;
+            font-size: 0.95rem;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+        
+        .btn-signin {
+            background: linear-gradient(90deg, #4facfe, #00f2fe);
+            color: white;
+            border: none;
+            padding: 16px 40px;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 25px rgba(79, 172, 254, 0.4);
+            width: 100%;
+            cursor: pointer;
+            margin-top: 20px;
+            margin-bottom: 25px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        .btn-signin:hover {
+            background: linear-gradient(90deg, #3d8bf2, #00d2ff);
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(79, 172, 254, 0.6);
+        }
+        
+        .btn-signin:active {
+            transform: translateY(-2px);
+        }
+        
+        .signup-link {
+            display: block;
+            text-align: center;
+            background: linear-gradient(90deg, #43e97b, #38f9d7);
+            color: white;
+            padding: 14px 30px;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 25px rgba(67, 233, 123, 0.4);
+            text-decoration: none;
+            margin-top: 10px;
+        }
+        
+        .signup-link:hover {
+            background: linear-gradient(90deg, #36cf5e, #00e6c3);
+            color: white;
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(67, 233, 123, 0.6);
+            text-decoration: none;
+        }
+        
+        .brand-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .brand-logo {
+            font-size: 2.5rem;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+        }
+        
+        .remember-forgot {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 15px;
+        }
+        
+        .remember-me {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .remember-me input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            accent-color: #667eea;
+            cursor: pointer;
+        }
+        
+        .remember-me label {
+            color: #666;
+            font-size: 0.95rem;
+            cursor: pointer;
+            user-select: none;
+        }
+        
+        .forgot-password {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: color 0.3s ease;
+        }
+        
+        .forgot-password:hover {
+            color: #764ba2;
+            text-decoration: underline;
+        }
+        
+        .or-divider {
+            display: flex;
+            align-items: center;
+            margin: 25px 0;
+            color: #666;
+        }
+        
+        .or-divider::before,
+        .or-divider::after {
+            content: "";
+            flex: 1;
+            height: 1px;
+            background: #e0e0e0;
+        }
+        
+        .or-divider span {
+            padding: 0 15px;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+        
+        .social-login {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .social-btn {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 12px;
+            border-radius: 10px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .social-google {
+            background: #ffffff;
+            color: #666;
+            border: 2px solid #e0e0e0;
+        }
+        
+        .social-google:hover {
+            background: #f8f9fa;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            color: #666;
+            text-decoration: none;
+        }
+        
+        .social-github {
+            background: #333333;
+            color: white;
+            border: 2px solid #333333;
+        }
+        
+        .social-github:hover {
+            background: #24292e;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            color: white;
+            text-decoration: none;
+        }
+        
+        .centered-form {
+            max-width: 400px;
+            margin: 0 auto;
+        }
+        
+        .form-row {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 10px;
+        }
+        
+        .form-row .form-label {
+            flex: 0 0 auto;
+            margin-bottom: 0;
+            white-space: nowrap;
+            width: 120px;
+        }
+        
+        .form-row .input-with-icon {
+            flex: 1;
+        }
+        
+        .field-error {
+            display: block;
+            color: #ff6b6b;
+            font-size: 0.85rem;
+            margin-top: 5px;
+            padding-left: 135px; /* Align with input fields */
+        }
+        
+        @media (max-width: 576px) {
+            .signin-container {
+                padding: 30px 25px;
+            }
+            
+            .signin-title {
+                font-size: 2.2rem;
+            }
+            
+            .social-login {
+                flex-direction: column;
+            }
+            
+            .remember-forgot {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+            
+            .form-control {
+                padding: 14px 50px;
+            }
+            
+            .form-row {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 8px;
+            }
+            
+            .form-row .form-label {
+                width: 100%;
+            }
+            
+            .form-row .input-with-icon {
+                width: 100%;
+            }
+            
+            .field-error {
+                padding-left: 0;
+                width: 100%;
+            }
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="signin-container">
+        <div class="brand-header">
+            <div class="brand-logo">
+                <i class="fas fa-layer-group"></i>
+            </div>
+            <h2 class="signin-title">Welcome Back</h2>
+            <p class="signin-subtitle">Sign in to access your Category Collection</p>
+        </div>
+        
+        <div class="centered-form">
+            <form action="" method="POST" novalidate>
+                {% csrf_token %}
+                
+                {% if form.non_field_errors %}
+                    <div class="global-error">
+                        <i class="fas fa-exclamation-triangle me-2"></i>
+                        {% for error in form.non_field_errors %}
+                            {{ error }}
+                        {% endfor %}
+                    </div>
+                {% endif %}
+                
+                {% for fm in form %}
+                <div class="form-group">
+                    <div class="form-row">
+                        <label class="form-label" for="{{ fm.id_for_label }}">
+                            {% if fm.name == 'username' %}
+                                <i class="fas fa-user"></i> {{ fm.label_tag }}
+                            {% elif fm.name == 'password' %}
+                                <i class="fas fa-lock"></i> {{ fm.label_tag }}
+                            {% else %}
+                                <i class="fas fa-pencil-alt"></i> {{ fm.label_tag }}
+                            {% endif %}
+                        </label>
+                        
+                        <div class="input-with-icon">
+                            {{ fm }}
+                        </div>
+                    </div>
+                    
+                    {% if fm.errors %}
+                        {% for error in fm.errors %}
+                            <span class="field-error">
+                                <i class="fas fa-exclamation-circle me-1"></i>{{ error }}
+                            </span>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+                {% endfor %}
+                
+                <div class="remember-forgot">
+                    <div class="remember-me">
+                        <input type="checkbox" id="remember" name="remember">
+                        <label for="remember">Remember me</label>
+                    </div>
+                    <a href="{% url "forget_password" %}" class="forgot-password">
+                        <i class="fas fa-key me-1"></i>Forgot password?
+                    </a>
+                </div>
+                
+                <button type="submit" class="btn-signin">
+                    <i class="fas fa-sign-in-alt me-2"></i> Sign In
+                </button>
+            </form>
+            <div class="mt-4">
+                <a href="{% url "sign_up" %}" class="signup-link">
+                    <i class="fas fa-user-plus me-2"></i> Don't have an account? Sign Up
+                </a>
+            </div>
+        </div>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+    
+    <script>
+        // Add animation to form elements on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            const formGroups = document.querySelectorAll('.form-group');
+            formGroups.forEach((group, index) => {
+                group.style.opacity = '0';
+                group.style.transform = 'translateY(20px)';
+                
+                setTimeout(() => {
+                    group.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                    group.style.opacity = '1';
+                    group.style.transform = 'translateY(0)';
+                }, 200 + (index * 100));
+            });
+            
+            // Animate social buttons
+            const socialBtns = document.querySelectorAll('.social-btn');
+            socialBtns.forEach((btn, index) => {
+                btn.style.opacity = '0';
+                btn.style.transform = 'translateX(20px)';
+                
+                setTimeout(() => {
+                    btn.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                    btn.style.opacity = '1';
+                    btn.style.transform = 'translateX(0)';
+                }, 400 + (index * 200));
+            });
+            
+            // Add ripple effect to buttons
+            const buttons = document.querySelectorAll('.btn-signin, .signup-link, .social-btn');
+            buttons.forEach(button => {
+                button.addEventListener('click', function(e) {
+                    const ripple = document.createElement('span');
+                    const rect = this.getBoundingClientRect();
+                    const size = Math.max(rect.width, rect.height);
+                    const x = e.clientX - rect.left - size / 2;
+                    const y = e.clientY - rect.top - size / 2;
+                    
+                    ripple.style.cssText = `
+                        position: absolute;
+                        border-radius: 50%;
+                        background: rgba(255, 255, 255, 0.3);
+                        transform: scale(0);
+                        animation: ripple-animation 0.6s linear;
+                        width: ${size}px;
+                        height: ${size}px;
+                        top: ${y}px;
+                        left: ${x}px;
+                        pointer-events: none;
+                        z-index: 1;
+                    `;
+                    
+                    this.style.position = 'relative';
+                    this.style.overflow = 'hidden';
+                    this.appendChild(ripple);
+                    
+                    setTimeout(() => {
+                        ripple.remove();
+                    }, 600);
+                });
+            });
+            
+            // Focus effect for form inputs
+            const inputs = document.querySelectorAll('.form-control');
+            inputs.forEach(input => {
+                input.addEventListener('focus', function() {
+                    this.style.transform = 'scale(1.02)';
+                });
+                
+                input.addEventListener('blur', function() {
+                    this.style.transform = 'scale(1)';
+                });
+            });
+            
+            // Add CSS for ripple animation
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes ripple-animation {
+                    to {
+                        transform: scale(4);
+                        opacity: 0;
+                    }
+                }
+            `;
+            document.head.appendChild(style);
+        });
+    </script>
+</body>
+</html>

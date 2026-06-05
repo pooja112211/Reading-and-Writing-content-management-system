@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" integrity="sha512-nMNlpuaDPrqlEls3IX/Q56H36qvBASwb3ipuo3MxeWbsQB1881ox0cRv7UPTgBlriqoynt35KjEwgGUeUXIPnw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/i18n/zh-TW.min.js" integrity="sha512-whWyZS4LtoXu4LzFJbHIgL9Cr7Sf2+KyeEAGumtXN+8U234v1R89monfd9PLYnC0TNBArmPnkFOVo8ShuMpZaw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <title>Buyer Collections</title>
+    
+   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+$(document).ready(function () {
+
+    var $type = $('#typee');
+    var $category = $('#category');
+    var $item = $('#item');
+
+    var $catOptions = $category.find('option');
+    var $itemOptions = $item.find('option');
+
+    // Hide everything at start
+    $catOptions.not(':first').hide();
+    $itemOptions.not(':first').hide();
+
+    // When TYPE changes
+    $type.on('change', function () {
+        var typeId = this.value;
+
+        // reset category & item
+        $category.val('');
+        $item.val('');
+
+        $catOptions.not(':first').hide();
+        $itemOptions.not(':first').hide();
+
+        if (typeId) {
+            $catOptions.filter(function () {
+                return $(this).data('type') == typeId;
+            }).show();
+        }
+    });
+
+    // When CATEGORY changes
+    $category.on('change', function () {
+        var categoryId = this.value;
+        var typeId = $type.val();
+
+        $item.val('');
+        $itemOptions.not(':first').hide();
+
+        if (categoryId && typeId) {
+            $itemOptions.filter(function () {
+                return (
+                    $(this).data('type') == typeId &&
+                    $(this).data('category') == categoryId
+                );
+            }).show();
+        }
+    });
+
+});
+
+</script>
+
+</head>
+<body>
+    <form action="" method="POST">
+        {% csrf_token %}
+        <label for="invoice_no">Invoice No.</label>
+        <input type="text" name="invoice_no" id="invoice_no" readonly>
+        <label for="date">Date</label>
+        <input type="date" name="date" id="date">
+        <br><br>
+        <table>
+            <thead>
+                <tr>
+                    <th>Sno</th>
+                    <th>Type</th>
+                    <th>Category</th>
+                    <th>Item</th>
+                    <th>Quantity</th>
+                    <th>Amount</th>
+                    <th>Add</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{forloop.counter}}</td>
+                    <td>
+                        <select name="typee" id="typee">
+                            <option value="">--Select Type--</option>
+                            {% for ty in type %}
+                                <option value="{{ty.id}}">{{ty.type_name}}</option>
+                            {% endfor %}
+                        </select>
+                    </td>
+                    <td>
+                        <select name="category" id="category">
+                            <option value="">--Select Category--</option>
+                            {% for cat in category %}
+                                <option value="{{cat.id}}">{{cat.name}}</option>
+                            {% endfor %}
+                        </select>
+                    </td>
+                    <td>
+                        <select name="item" id="item">
+    <option value="">--Select Item--</option>
+    {% for itm in item %}
+        <option value="{{ itm.id }}" data-type="{{ itm.cat.id }}" hidden>
+            {{ itm.name }}
+        </option>
+    {% endfor %}
+</select>
+
+                    </td>
+                    <td>
+                        <input type="number" name="qty" id="qty">
+                    </td>
+                    <td>
+                        <input type="number" name="amount" id="amount" readonly>
+                    </td>
+                    <td>
+                        <button>Add</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </form>
+</body>
+
+{% comment %} <script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const now = new Date();
+        document.getElementById("invoice_no").value = Date.now();
+        document.getElementById("date").value = now.toISOString().split('T')[0];
+    });
+
+    $(document).ready(function(){
+        function calculateAmount(row){
+            var item = row.find(".item");
+            var qty = parseFloat(row.find(".qty").val()) || 0;
+            var rate = parseFloat(item.find("option:selected").data(""))
+        }
+    })
+</script> {% endcomment %}
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+{% comment %} <script>
+    $(document).ready(function () {
+
+    var $type = $('#typee');
+    var $category = $('#category');
+    var $item = $('#item');
+
+    var $catOptions = $category.find('option');
+    var $itemOptions = $item.find('option');
+
+    // Hide everything at start
+    $catOptions.not(':first').hide();
+    $itemOptions.not(':first').hide();
+
+    // When TYPE changes
+    $type.on('change', function () {
+        var typeId = this.value;
+
+        // reset category & item
+        $category.val('');
+        $item.val('');
+
+        $catOptions.not(':first').hide();
+        $itemOptions.not(':first').hide();
+
+        if (typeId) {
+            $catOptions.filter(function () {
+                return $(this).data('type') == typeId;
+            }).show();
+        }
+    });
+
+    // When CATEGORY changes
+    $category.on('change', function () {
+        var categoryId = this.value;
+        var typeId = $type.val();
+
+        $item.val('');
+        $itemOptions.not(':first').hide();
+
+        if (categoryId && typeId) {
+            $itemOptions.filter(function () {
+                return (
+                    $(this).data('type') == typeId &&
+                    $(this).data('category') == categoryId
+                );
+            }).show();
+        }
+    });
+
+});
+
+</script> {% endcomment %}

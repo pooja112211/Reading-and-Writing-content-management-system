@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <title>Type Collection</title>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            min-height: 100vh;
+            padding-bottom: 50px;
+        }
+        
+        .main-container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 30px;
+            margin-top: 30px;
+            margin-bottom: 30px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+        }
+        
+        .page-header {
+            text-align: center;
+            margin-bottom: 50px;
+            padding-bottom: 30px;
+            border-bottom: 3px solid #667eea;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .page-title {
+            font-weight: 800;
+            font-size: 3rem;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .page-subtitle {
+            color: #666;
+            font-size: 1.2rem;
+            font-weight: 400;
+        }
+        
+        .type-card {
+            border: none;
+            border-radius: 20px;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            background: white;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            height: 100%;
+            margin-bottom: 30px;
+        }
+        
+        /* Different vibrant card themes */
+        .type-card:nth-child(4n+1) { background: linear-gradient(145deg, #ff9a9e 0%, #fad0c4 100%); }
+        .type-card:nth-child(4n+2) { background: linear-gradient(145deg, #a1c4fd 0%, #c2e9fb 100%); }
+        .type-card:nth-child(4n+3) { background: linear-gradient(145deg, #84fab0 0%, #8fd3f4 100%); }
+        .type-card:nth-child(4n+4) { background: linear-gradient(145deg, #d4fc79 0%, #96e6a1 100%); }
+        
+        .type-card:hover {
+            transform: translateY(-15px) scale(1.03);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2);
+        }
+        
+        .card-img-container {
+            height: 220px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .card-img-top {
+            height: 100%;
+            width: 100%;
+            object-fit: cover;
+            transition: transform 0.6s ease;
+            filter: brightness(0.9);
+        }
+        
+        .type-card:hover .card-img-top {
+            transform: scale(1.15);
+            filter: brightness(1);
+        }
+        
+        .img-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(to bottom, transparent 50%, rgba(0,0,0,0.7));
+        }
+        
+        .card-body {
+            padding: 25px;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .card-title {
+            font-weight: 700;
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+            text-shadow: 1px 1px 2px rgba(255,255,255,0.5);
+        }
+        
+        .card-text {
+            color: #34495e;
+            flex-grow: 1;
+            margin-bottom: 20px;
+            font-size: 1rem;
+            line-height: 1.7;
+            font-weight: 500;
+        }
+        
+        .btn-update {
+            background: #ff6b6b;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            align-self: flex-start;
+            box-shadow: 0 5px 15px rgba(255, 107, 107, 0.4);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .btn-update:hover {
+            background: #ff4757;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(255, 107, 107, 0.6);
+        }
+        
+        /* Different button colors */
+        .type-card:nth-child(4n+1) .btn-update { background: linear-gradient(90deg, #ff6b6b, #ff8e8e); }
+        .type-card:nth-child(4n+2) .btn-update { background: linear-gradient(90deg, #4facfe, #00f2fe); }
+        .type-card:nth-child(4n+3) .btn-update { background: linear-gradient(90deg, #43e97b, #38f9d7); }
+        .type-card:nth-child(4n+4) .btn-update { background: linear-gradient(90deg, #fa709a, #fee140); }
+        
+        .type-card:nth-child(4n+1) .btn-update:hover { background: linear-gradient(90deg, #ff4757, #ff6b6b); }
+        .type-card:nth-child(4n+2) .btn-update:hover { background: linear-gradient(90deg, #3d8bf2, #00d2ff); }
+        .type-card:nth-child(4n+3) .btn-update:hover { background: linear-gradient(90deg, #36cf5e, #00e6c3); }
+        .type-card:nth-child(4n+4) .btn-update:hover { background: linear-gradient(90deg, #f8457a, #feda35); }
+        
+    
+        .empty-state {
+            padding: 60px 40px;
+            text-align: center;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            border-radius: 20px;
+            color: white;
+        }
+        
+        .empty-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            filter: drop-shadow(2px 2px 5px rgba(0,0,0,0.2));
+        }
+        
+        .empty-title {
+            font-weight: 700;
+            margin-bottom: 15px;
+            font-size: 2.2rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+        
+        .empty-text {
+            max-width: 500px;
+            margin: 0 auto 30px;
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        
+        .btn-add {
+            background: white;
+            color: #ff6b6b;
+            border: none;
+            padding: 15px 40px;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+        }
+        
+        .btn-add:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+        }
+        
+        .counter {
+        background: var(--stone-800);  /* Changed from white to dark background */
+        padding: 15px 25px;
+        border-radius: 15px;
+        display: inline-block;
+        margin-bottom: 30px;
+        box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        font-weight: 700;
+        color: var(--stone-100);  /* Changed to light text */
+        font-size: 1.2rem;
+        border: 1px solid var(--stone-700);
+    }
+    
+        .counter span {
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-size: 1.5rem;
+        }
+        
+        @media (max-width: 768px) {
+            .main-container {
+                padding: 20px;
+                margin: 15px;
+            }
+            
+            .page-title {
+                font-size: 2.2rem;
+            }
+            
+            .card-img-container {
+                height: 180px;
+            }
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark" style="background: linear-gradient(90deg, #667eea, #764ba2); padding: 15px 0;">
+        <div class="container">
+            <a class="navbar-brand" href="#" style="font-weight: 800; font-size: 1.8rem;">
+                <i class="fas fa-layer-group me-2"></i>NovelCollection
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="{% url "type" %}" style="font-weight: 600;">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url "change_pass" %}" style="font-weight: 600;">Change Password</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" style="font-weight: 600;">Buy/Sell</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url "category" %}" style="font-weight: 600;">Categories</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url "mine_list" %}" style="font-weight: 600;">Add ur Own</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url "log_out" %}" style="font-weight: 600;">Logout</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    
+    <div class="container">
+        <div class="main-container">
+            <div class="page-header">
+                <h1 class="page-title">{{ category }} - {{ type.type_name }}</h1>
+                <h2><a href="{% url "add_novel" %}">Add New Novel</a></h2>
+                <p class="page-subtitle">Explore our vibrant collection of categorized novels</p>
+                
+                <div class="counter">
+                    Currently displaying <span>{{ novel|length }}</span> novels
+                </div>
+            </div>
+            
+            {% if novel %}
+                <div class="row">
+                    {% for novel in novel %}
+                    <div class="col-12 col-sm-6 col-lg-4 col-xl-3">
+                        <div class="type-card">
+                            <div class="card-img-container">
+                                <div class="img-overlay"></div>
+                                <img src="{{novel.img.url}}" class="card-img-top" alt="{{novel}} image">
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title">{{novel}}</h5>
+                                <p class="card-text">{{novel.desc|truncatechars:120}}</p>
+                                <a href="{% url "view_novel" novel.id %}" class="btn-update">
+                                    <i class="fas fa-edit me-2"></i>Explore
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <div class="empty-state">
+                    <div class="empty-icon">
+                        <i class="fas fa-folder-open"></i>
+                    </div>
+                    <h3 class="empty-title">No Novel Available</h3>
+                    <p class="empty-text">There are currently no novel to display. Add new novels to see them appear in this beautiful collection.</p>
+                    <a href="{% url "add_novel" %}" class="btn btn-add">
+                        <i class="fas fa-plus-circle me-2"></i>Add New Novel
+                    </a>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+
+    
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Add animation to cards on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            const cards = document.querySelectorAll('.type-card');
+            cards.forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(50px) rotateY(20deg)';
+                
+                setTimeout(() => {
+                    card.style.transition = 'opacity 0.8s ease, transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0) rotateY(0)';
+                }, index * 150);
+            });
+            
+            // Add ripple effect to buttons
+            document.querySelectorAll('.btn-update, .btn-add').forEach(button => {
+                button.addEventListener('click', function(e) {
+                    const ripple = document.createElement('span');
+                    const rect = this.getBoundingClientRect();
+                    const size = Math.max(rect.width, rect.height);
+                    const x = e.clientX - rect.left - size / 2;
+                    const y = e.clientY - rect.top - size / 2;
+                    
+                    ripple.style.cssText = `
+                        position: absolute;
+                        border-radius: 50%;
+                        background: rgba(255, 255, 255, 0.7);
+                        transform: scale(0);
+                        animation: ripple-animation 0.6s linear;
+                        width: ${size}px;
+                        height: ${size}px;
+                        top: ${y}px;
+                        left: ${x}px;
+                        pointer-events: none;
+                    `;
+                    
+                    this.appendChild(ripple);
+                    
+                    setTimeout(() => {
+                        ripple.remove();
+                    }, 600);
+                });
+            });
+        });
+        
+        // Add CSS for ripple animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes ripple-animation {
+                to {
+                    transform: scale(4);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>
