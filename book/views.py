@@ -135,7 +135,7 @@ def add_novel(request):
             img=img
         )
         return redirect("novel")
-    return render(request, "add_novel.html", {"category": categories})
+    return render(request, "add_novel.html", {"category": categories,"type":type})
 
 ##################################### UPDATE NOVEL ###########################################################
 def update_novel(request,id):
